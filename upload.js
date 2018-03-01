@@ -21,6 +21,8 @@ var storage = multer.diskStorage({
 
 const upload  = multer({storage: storage});
 
+app.set('view engine', 'pug');
+
 app.use("/content", serveIndex(uploadDir));
 app.use("/content", serveStatic(uploadDir));
 
@@ -29,7 +31,7 @@ app.listen(3000, function () {
 });
 
 app.get('/',function(req,res){
-  res.sendFile(path.join(__dirname, 'upload.html'));
+  res.render('index');
 });
 
  
@@ -55,5 +57,5 @@ app.post('/upload-extras', upload.any(), function(req, res){
 
   req.files.forEach(file => console.log("Uploaded file " + file.path));
   
-  res.status(200).send("Files successfully uploaded.");
+  res.render('index', {message: 'Files successfully uploaded.'});
 });

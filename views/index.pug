@@ -1,0 +1,18 @@
+html
+  head
+    title Asciido 2 PDF
+  body
+    div
+      div= message
+    div(class='container')
+      h1 Create PDF from Asciidoc
+      form(ref='uploadForm', id='uploadForm', action='upload', method='post', encType='multipart/form-data')
+        input(type='file', name='uploadFile')
+        input(type='submit', value='PDF')
+
+      form(ref='uploadForm-extras', id='uploadFormExtras', action='/upload-extras', method='post', encType='multipart/form-data')
+        input(type='file', name='uploadFiles', multiple='multiple')
+        input(type='submit', value='EXTRAS')
+
+      p
+      a(href='/content') Uploaded Content
