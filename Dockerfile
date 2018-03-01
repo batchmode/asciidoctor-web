@@ -7,5 +7,6 @@ RUN 	   apk add --no-cache nodejs-npm \
 	&& mkdir upload
 
 COPY upload.js upload.html ./
+COPY views ./views
 
 CMD [ "node", "upload.js" ]
