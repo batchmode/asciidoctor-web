@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Asciidoc 2 PDF</title>
+  </head>
+  <body>
+
+    <div class="container">
+
+      <h1>Create PDF from Asciidoc</h1>
+
+      <form ref='uploadForm' 
+        id='uploadForm' 
+        action='/upload' 
+        method='post' 
+        encType="multipart/form-data">
+            <input type="file" name="uploadFile" />
+            <input type='submit' value='PDF' />
+      </form>
+
+      <form ref='uploadForm-extras'
+        id='uploadFormExtras'
+        action='/upload-extras'
+        method='post'
+        encType="multipart/form-data">
+            <input type="file" name="uploadFiles" multiple="multiple" />
+            <input type='submit' value='EXTRAS' />
+      </form>
+
+     <p/>
+
+    <a href="/content">Uploaded Content</a>
+
+    </div>
+
+  </body>
+
+</html>
