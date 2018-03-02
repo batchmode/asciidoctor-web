@@ -9,6 +9,7 @@ const serveIndex = require('serve-index');
 const app = express();
 
 const uploadDir = path.join(__dirname, 'upload');
+const jsDir = path.join(__dirname, 'js');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -25,6 +26,7 @@ app.set('view engine', 'pug');
 
 app.use("/content", serveIndex(uploadDir));
 app.use("/content", serveStatic(uploadDir));
+app.use("/js", serveStatic(jsDir));
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
