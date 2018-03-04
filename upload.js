@@ -36,23 +36,18 @@ app.get('/',function(req,res){
   res.render('index', {content: fs.readdirSync(uploadDir)});
 });
 
-app.post('/upload', upload.single('uploadFile'), function(req, res) {
-  if (!req.file)
-    return res.status(400).send('No file has been uploaded.');
- 
-  let docFile = req.file.path;
-  
-  console.log("The file " + req.file.originalname + " has been uploaded to " + docFile);
- 
+app.get('/2pdf/:file', function(req, res){
+  var docFile = path.join(uploadDir, req.params.file);
+
   exec('asciidoctor-pdf -r asciidoctor-diagram ' + docFile, (err, stdout, stderr) => {
     if(err)
       return res.status(500).send(err);
 
     res.sendFile(replaceExt(docFile, '.pdf'));
-  });    
+  });
 });
 
-app.post('/upload-extras', upload.any(), function(req, res){
+app.post('/upload', upload.any(), function(req, res){
   if(!req.files)
     return res.status(400).send('No files have been uploaded.');
 
