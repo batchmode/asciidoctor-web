@@ -25,7 +25,8 @@ const upload  = multer({storage: storage});
 
 app.set('view engine', 'pug');
 
-app.use("/js", serveStatic(jsDir));
+app.use('js', serveStatic(jsDir));
+app.use('/uploaded', serveStatic(uploadDir));
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
@@ -58,4 +59,9 @@ app.post('/upload-extras', upload.any(), function(req, res){
   req.files.forEach(file => console.log('Uploaded file ' + file.path));
   
   res.render('index', {message: 'Files successfully uploaded.', content: fs.readdirSync(uploadDir)});
+});
+
+app.get('/purge', function(req, res){
+  fs.readdirSync(uploadDir).forEach(file => fs.unlinkSync(path.join(uploadDir, file)));
+  res.render('index', {message: 'Purged upload directory', content: fs.readdirSync(uploadDir)});
 });

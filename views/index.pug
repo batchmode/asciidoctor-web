@@ -17,6 +17,9 @@ html
 
       p
     div
+      div Uploaded files so far:
+      a(href='/purge') Purge
       ul
         each file in content
-          li= file
+          li
+            a(href='/uploaded/' + file)= file
