@@ -23,5 +23,5 @@ html
             a(href='/uploaded/' + file.path)= file.path
 
             if file.isAsciidoc
-              a(href='/2pdf/' + file.path)
+              a(href='/2pdf/' + file.path, style='padding-left: 10px')
                 i(class='far fa-file-pdf')
