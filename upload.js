@@ -5,8 +5,9 @@ const { exec } = require('child_process');
 const multer = require('multer');
 const express = require('express');
 const serveStatic = require('serve-static');
-const serveIndex = require('serve-index');
 const app = express();
+
+app.locals.pretty = true;
 
 const uploadDir = path.join(__dirname, 'upload');
 const jsDir = path.join(__dirname, 'js');
@@ -24,8 +25,6 @@ const upload  = multer({storage: storage});
 
 app.set('view engine', 'pug');
 
-app.use("/content", serveIndex(uploadDir));
-app.use("/content", serveStatic(uploadDir));
 app.use("/js", serveStatic(jsDir));
 
 app.listen(3000, function () {
@@ -33,10 +32,9 @@ app.listen(3000, function () {
 });
 
 app.get('/',function(req,res){
-  res.render('index');
+  res.render('index', {content: fs.readdirSync(uploadDir)});
 });
 
- 
 app.post('/upload', upload.single('uploadFile'), function(req, res) {
   if (!req.file)
     return res.status(400).send('No file has been uploaded.');
@@ -57,7 +55,7 @@ app.post('/upload-extras', upload.any(), function(req, res){
   if(!req.files)
     return res.status(400).send('No files have been uploaded.');
 
-  req.files.forEach(file => console.log("Uploaded file " + file.path));
+  req.files.forEach(file => console.log('Uploaded file ' + file.path));
   
-  res.render('index', {message: 'Files successfully uploaded.'});
+  res.render('index', {message: 'Files successfully uploaded.', content: fs.readdirSync(uploadDir)});
 });

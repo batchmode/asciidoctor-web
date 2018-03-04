@@ -1,13 +1,7 @@
 html
   head
-    script(src='js/jquery-3.3.1.min.js')
     title Asciido 2 PDF
   body
-    script.
-      $(document).ready(function(){
-        console.log('Im ready :)');
-        $('#content').load('/content');
-      });
 
     div
       div= message
@@ -22,4 +16,7 @@ html
         input(type='submit', value='EXTRAS')
 
       p
-    div(id='content')
+    div
+      ul
+        each file in content
+          li= file
