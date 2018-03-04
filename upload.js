@@ -25,7 +25,7 @@ const upload  = multer({storage: storage});
 
 app.set('view engine', 'pug');
 
-app.use('js', serveStatic(jsDir));
+app.use('/js', serveStatic(jsDir));
 app.use('/uploaded', serveStatic(uploadDir));
 
 app.listen(3000, function () {
