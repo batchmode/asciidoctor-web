@@ -1,6 +1,7 @@
 html
   head
     title Asciido 2 PDF
+    script(defer, src='https://use.fontawesome.com/releases/v5.0.8/js/all.js')
   body
 
     div
@@ -19,5 +20,8 @@ html
       ul
         each file in content
           li
-            a(href='/uploaded/' + file)= file
-            a(href='/2pdf/' + file) 2PDF
+            a(href='/uploaded/' + file.path)= file.path
+
+            if file.isAsciidoc
+              a(href='/2pdf/' + file.path)
+                i(class='far fa-file-pdf')

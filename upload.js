@@ -33,7 +33,7 @@ app.listen(3000, function () {
 });
 
 app.get('/',function(req,res){
-  res.render('index', {content: fs.readdirSync(uploadDir)});
+  index(res);
 });
 
 app.get('/2pdf/:file', function(req, res){
@@ -53,10 +53,26 @@ app.post('/upload', upload.any(), function(req, res){
 
   req.files.forEach(file => console.log('Uploaded file ' + file.path));
   
-  res.render('index', {message: 'Files successfully uploaded.', content: fs.readdirSync(uploadDir)});
+  index(res, 'Files successfully uploaded.');
 });
 
 app.get('/purge', function(req, res){
   fs.readdirSync(uploadDir).forEach(file => fs.unlinkSync(path.join(uploadDir, file)));
-  res.render('index', {message: 'Purged upload directory', content: fs.readdirSync(uploadDir)});
+  index(res, 'Purged upload directory');
 });
+
+function index(res, message) {
+  var files = [];
+
+  fs.readdirSync(uploadDir).forEach(file => files.push(forView(file)));
+
+  res.render('index', {message: message, content: files});
+}
+
+function forView(file) {
+  return {path: file, isAsciidoc: isAsciidoc(file)};
+}
+
+function isAsciidoc(file) {
+  return file.toLowerCase().endsWith('.adoc') || file.toLowerCase().endsWith('asciidoc');
+}
